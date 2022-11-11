@@ -69,7 +69,7 @@ namespace razor_secret_santa.Pages
 
                 try
                 {
-                    SendHello(userModel.id, userModel.email, userModel.name, userModel.group);
+                    SendHello(userModel.id, userModel.name, userModel.group, userModel.email);
                 }
                 catch (Exception ex)
                 {
