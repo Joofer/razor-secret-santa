@@ -1,0 +1,42 @@
+﻿@page
+@model LoginModel
+
+@{
+	ViewData["Title"] = "Log in";
+}
+
+<div class="container-fluid d-flex justify-content-center align-items-center" style="min-height:80vh; overflow:hidden;">
+	<div class="home-container">
+
+		<h1 class="text-center">Войти</h1>
+
+		<form class="p-2" id="account" method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-floating p-2">
+				<input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+				<label asp-for="Input.Email" class="form-label"></label>
+				<span asp-validation-for="Input.Email" class="text-danger"></span>
+			</div>
+			<div class="form-floating p-2">
+				<input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
+				<label asp-for="Input.Password" class="form-label"></label>
+				<span asp-validation-for="Input.Password" class="text-danger"></span>
+			</div>
+			<div class="checkbox px-2">
+				<label asp-for="Input.RememberMe" class="form-label">
+					<input class="form-check-input" asp-for="Input.RememberMe" />
+					@Html.DisplayNameFor(m => m.Input.RememberMe)
+				</label>
+			</div>
+			<div class="d-flex justify-content-center align-items-center">
+				<a class="m-2 w-50 btn btn-lg btn-secondary" asp-page="/Index">Назад</a>
+				<button id="login-submit" type="submit" class="m-2 w-50 btn btn-lg btn-primary">Войти</button>
+			</div>
+		</form>
+
+	</div>
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

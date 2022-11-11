@@ -1,0 +1,36 @@
+﻿@page
+@model razor_secret_santa.Pages.Control.EditUserModel
+@{
+	ViewData["Title"] = "Секретный Санта";
+}
+
+<div class="container-fluid d-flex justify-content-center align-items-center" style="min-height:80vh; overflow:hidden;">
+	<div class="home-container">
+
+		<h1 class="text-center">Редактировать участника</h1>
+
+		<form class="p-2" method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-floating p-2">
+				<input asp-for="user!.name" value="@Model.user!.name" class="form-control" aria-required="true" />
+				<label asp-for="user!.name" class="form-label"></label>
+				<span asp-validation-for="user!.name" class="text-danger"></span>
+			</div>
+			<div class="form-floating p-2">
+				<input asp-for="user!.group" value="@Model.user!.group" class="form-control" aria-required="true" />
+				<label asp-for="user!.group" class="form-label"></label>
+				<span asp-validation-for="user!.group" class="text-danger"></span>
+			</div>
+			<div class="form-floating p-2">
+				<input asp-for="user!.email" value="@Model.user!.email" class="form-control" aria-required="true" />
+				<label asp-for="user!.email" class="form-label"></label>
+				<span asp-validation-for="user!.email" class="text-danger"></span>
+			</div>
+			<div class="d-flex justify-content-center align-items-center">
+				<a class="m-2 w-50 btn btn-lg btn-secondary" asp-page="/Control">Назад</a>
+				<button type="submit" class="m-2 w-50  btn btn-lg btn-success">Сохранить</button>
+			</div>
+		</form>
+
+	</div>
+</div>

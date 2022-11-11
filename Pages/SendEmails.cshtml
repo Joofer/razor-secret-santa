@@ -1,0 +1,46 @@
+﻿@page
+@model razor_secret_santa.Pages.SendEmailsModel
+@{
+	ViewData["Title"] = "Секретный Санта";
+}
+
+<div class="text-center">
+
+	@if (Model.state == "success")
+	{
+		<div class="alert alert-success alert-dismissible fade show" role="alert">
+			<strong>Успешно!</strong> Рассылка для группы @(Model.groupSent != null ? Model.groupSent : "#") успешно завершена.
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	}
+	else if (Model.state == "error")
+	{
+		<div class="alert alert-danger alert-dismissible fade show" role="alert">
+			<strong>Ошибка!</strong> Произошла ошибка во время рассылки для группы @(Model.groupSent != null ? Model.groupSent : "#").
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	}
+
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Группа</th>
+				<th scope="col">Количество участников</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var users in Model.users)
+			{
+				<tr>
+					<th scope="row">@users.Key</th>
+					<td>@users.Value.Count</td>
+					<td>
+						<a class="btn btn-info text-white" asp-page="/Control/StartEmails" asp-route-group="@users.Key">Рассылка</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+
+</div>

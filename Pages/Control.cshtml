@@ -1,0 +1,73 @@
+﻿@page
+@model razor_secret_santa.Pages.ControlModel
+@{
+	ViewData["Title"] = "Тайный Санта";
+}
+
+<div class="text-center">
+
+	<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+		<li class="nav-item" role="presentation">
+			<button class="nav-link active" id="pills-users-tab" data-bs-toggle="pill" data-bs-target="#pills-users" type="button" role="tab" aria-controls="pills-users" aria-selected="true">Участники</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button class="nav-link" id="pills-gifts-tab" data-bs-toggle="pill" data-bs-target="#pills-gifts" type="button" role="tab" aria-controls="pills-gifts" aria-selected="false">Подарки</button>
+		</li>
+	</ul>
+
+	<div class="tab-content" id="pills-tabContent">
+		<div class="tab-pane fade show active" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab" tabindex="0">
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Имя</th>
+						<th scope="col">Группа</th>
+						<th scope="col">Email</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var user in Model.Users)
+					{
+						<tr>
+							<th scope="row">@user.id</th>
+							<td>@user.name</td>
+							<td>@user.group</td>
+							<td>@user.email</td>
+							<td>
+								<a class="btn btn-info text-white" asp-page="/Control/EditUser" asp-route-id="@user.id">Ред.</a>
+								<a class="btn btn-danger text-white" asp-page="/Control/DeleteUser" asp-route-id="@user.id">Удалить</a>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+		<div class="tab-pane fade" id="pills-gifts" role="tabpanel" aria-labelledby="pills-gifts-tab" tabindex="0">
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Описание</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var gift in Model.Gifts)
+					{
+						<tr>
+							<th scope="row">@gift.id</th>
+							<td>@gift.name</td>
+							<td>
+								<a class="btn btn-info text-white" asp-page="/Control/EditGift" asp-route-id="@gift.id">Ред.</a>
+								<a class="btn btn-danger text-white" asp-page="/Control/DeleteGift" asp-route-id="@gift.id">Удалить</a>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>

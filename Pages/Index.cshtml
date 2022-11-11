@@ -1,0 +1,277 @@
+﻿@page
+@model IndexModel
+@{
+	ViewData["Title"] = "Тайный Санта";
+
+	DateTime phase1 = new DateTime(2022, 12, 25),
+		phase2 = new DateTime(2022, 12, 2),
+		phase3 = new DateTime(2022, 12, 8),
+		phase4 = new DateTime(2022, 12, 23);
+
+	// if (DateTime.Today >= phase1 && DateTime.Today < phase2) Model.phase = 1;
+	// else if (DateTime.Today >= phase2 && DateTime.Today < phase3) Model.phase = 2;
+	// else if (DateTime.Today >= phase3 && DateTime.Today < phase4) Model.phase = 3;
+	// else Model.phase = 0;
+}
+
+<div class="container-fluid d-flex justify-content-center align-items-center" style="min-height:80vh; overflow:hidden;">
+
+	<div class="row text-center d-flex align-items-center">
+
+		@if (Model.phase >= 0)
+		{
+			<!-- Modal -->
+
+			<div class="modal fade" id="rulesModal" tabindex="-1" role="dialog" aria-labelledby="rulesModalTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="rulesModalTitle">Правила</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="d-flex">
+								<p><span class="badge bg-info">1</span> Подарок не должен быть слишком дорогим.</p>
+								<p><span class="badge bg-info">2</span> За ним не нужно ехать в Казахстан или не слишком трудно сделать.</p>
+								<p><span class="badge bg-info">3</span> Будет круто, если каждый участник внесет хотя бы одну идею.</p>
+							</div>
+							<hr />
+							<div class="row">
+								<div class="w-25">
+									@if (Model.phase == 1)
+									{
+										<h5 class="text-bordered border-dark px-2 py-1">Этап 1</h5>
+									}
+									else
+									{
+										<h5 class="text-bordered border-white px-2 py-1">Этап 1</h5>
+									}
+								</div>
+								<div class="w-75">
+									<p class="text-start">Вносятся идеи для подарков, в 3 этапе может выпасть именно этот подарок, так как подарки распределяются случайно.</p>
+								</div>
+								<div class="w-25">
+									@if (Model.phase == 2)
+									{
+										<h5 class="text-bordered border-dark px-2 py-1">Этап 2</h5>
+									}
+									else
+									{
+										<h5 class="text-bordered border-white px-2 py-1">Этап 2</h5>
+									}
+								</div>
+								<div class="w-75">
+									<p class="text-start">Регистрация участников, понадобится имя, группа и email для дальнейшего распределения и рассылки.</p>
+								</div>
+								<div class="w-25">
+									@if (Model.phase == 3)
+									{
+										<h5 class="text-bordered border-dark px-2 py-1">Этап 3</h5>
+									}
+									else
+									{
+										<h5 class="text-bordered border-white px-2 py-1">Этап 3</h5>
+									}
+								</div>
+								<div class="w-75">
+									<p class="text-start">Распределение подарков происходит случайно, подарок нужно подарить до конца этого этапа.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<script>
+				function openRules() {
+					$('#rulesModal').modal('show');
+				}
+				function closeRules() {
+					$('#rulesModal').modal('hide');
+				}
+			</script>
+
+			<!-- /Modal -->
+		}
+
+		@if (Model.phase == 1)
+		{
+			<!-- Этап 1 -->
+
+			<div>
+
+				<div class="d-flex justify-content-center align-items-center">
+					<h1 class="title text-capitalize my-4 px-2 py-1">
+						Привет! Это - Тайный Санта
+					</h1>
+				</div>
+
+				<p class="subtitle">
+					Спасибо за участие в нашем крутом новогоднем ивенте! Прочитай правила <a class="link-info no-link" onclick="openRules();" href="#">здесь</a>.
+				</p>
+
+				<p class="subtitle">
+					Этап <span class="badge bg-info">1</span>: сбор пожеланий для подарков. Продлится до: <span class="badge bg-info">@(new DateTime(phase2.Ticks).AddDays(-1).ToString("dd/MM/yyyy"))</span>
+				</p>
+
+			</div>
+
+			<div class="d-flex justify-content-center align-items-center">
+
+				<form method="post">
+					<div class="row home-container">
+						@if (Model.state == "success")
+						{
+							<div class="w-100 p-1">
+								<div class="alert alert-info p-1 mb-0" role="alert">
+									<p>Успешно</p>
+								</div>
+							</div>
+						}
+						else if (Model.state == "error")
+						{
+							<div class="w-100 p-1">
+								<div class="alert alert-info p-1 mb-0" role="alert">
+									<p>Ошибка.</p>
+									@if (Model.error == "exists")
+									{
+										<p>Такой подарок уже существует.</p>
+									}
+								</div>
+							</div>
+						}
+						<div class="text-info" asp-validation-summary="ModelOnly"></div>
+						<div class="col-10 p-1">
+							<input type="text" class="w-100 form-control" asp-for="giftModel.name" placeholder="Подарок (краткое описание)..." required />
+						</div>
+						<div class="col-2 p-1">
+							<button class="w-100 btn btn-info text-white" type="submit">+</button>
+						</div>
+					</div>
+				</form>
+
+			</div>
+
+			<!-- /Этап 1 -->
+		}
+		else if (Model.phase == 2)
+		{
+			<!-- Этап 2 -->
+
+			<div>
+
+				<div class="d-flex justify-content-center align-items-center">
+					<h1 class="title text-capitalize my-4 px-2 py-1">
+						Привет! Это - Тайный Санта
+					</h1>
+				</div>
+
+				<p class="subtitle">
+					Спасибо за участие в нашем крутом новогоднем ивенте! Прочитай правила <a class="link-info no-link" onclick="openRules();" href="#">здесь</a>.
+				</p>
+
+				<p class="subtitle">
+					Этап <span class="badge bg-info">2</span>: регистрация. Продлится до: <span class="badge bg-info">@(new DateTime(phase3.Ticks).AddDays(-1).ToString("dd/MM/yyyy"))</span>
+				</p>
+
+			</div>
+
+			<div class="d-flex justify-content-center align-items-center">
+
+				<form method="post">
+					<div class="row home-container">
+						@if (Model.state == "success")
+						{
+							<div class="w-100 p-1">
+								<div class="alert alert-info p-1 mb-0" role="alert">
+									<p>Успешно</p>
+								</div>
+							</div>
+						}
+						else if (Model.state == "error")
+						{
+							<div class="w-100 p-1">
+								<div class="alert alert-info p-1 mb-0" role="alert">
+									<p>Ошибка</p>
+									@if (Model.error == "exists")
+									{
+										<p>Такой Email уже зарегистрирован.</p>
+									}
+								</div>
+							</div>
+						}
+						<div class="text-info" asp-validation-summary="ModelOnly"></div>
+						<div class="col-6 p-1">
+							<input type="text" class="w-100 form-control" asp-for="userModel.name" placeholder="Имя..." required />
+						</div>
+						<div class="col-6 p-1">
+							<input type="text" class="w-100 form-control" asp-for="userModel.group" placeholder="Группа..." required />
+						</div>
+						<div class="col-8 p-1">
+							<input type="email" class="w-100 form-control" asp-for="userModel.email" placeholder="Email..." required />
+						</div>
+						<div class="col-4 p-1">
+							<button class="w-100 btn btn-info text-white" type="submit">Вперед!</button>
+						</div>
+					</div>
+				</form>
+
+			</div>
+
+			<!-- /Этап 2 -->
+		}
+		else if (Model.phase == 3)
+		{
+			<!-- Этап 3 -->
+
+			<div>
+
+				<div class="d-flex justify-content-center align-items-center">
+					<h1 class="title text-capitalize my-4 px-2 py-1">
+						Привет! Это - Тайный Санта
+					</h1>
+				</div>
+
+				<p class="subtitle">
+					Спасибо за участие в нашем крутом новогоднем ивенте! Прочитай правила <a class="link-info no-link" onclick="openRules();" href="#">здесь</a>.
+				</p>
+
+				<p class="subtitle">
+					Этап <span class="badge bg-info">3</span>: рассылка на email и обмен подарков. Продлится до: <span class="badge bg-info">@phase4.AddDays(-1).ToString("dd/MM/yyyy")</span>
+				</p>
+
+				<p class="subtitle">
+					Участников: <span class="badge bg-info">15</span>
+				</p>
+
+			</div>
+
+			<!-- /Этап 3 -->
+		}
+		else
+		{
+			<!-- Этап 0 -->
+
+			<div>
+
+				<div class="d-flex justify-content-center align-items-center">
+					<h1 class="title text-capitalize my-4 px-2 py-1">
+						Привет! Это - Тайный Санта
+					</h1>
+				</div>
+
+				<p class="subtitle">
+					Скоро начнется крутой ивент, следи за обновлениями! Пока можешь прочитать правила <a class="link-info no-link" onclick="openRules();" href="#">здесь</a>.
+				</p>
+
+				<p class="subtitle">
+					Начало ивента: <span class="badge bg-info">@phase1.ToString("dd/MM/yyyy")</span>
+				</p>
+
+			</div>
+
+			<!-- /Этап 0 -->
+		}
+
+	</div>
+</div>

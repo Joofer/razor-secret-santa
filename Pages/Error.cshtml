@@ -1,0 +1,20 @@
+﻿@page
+@model ErrorModel
+@{
+	ViewData["Title"] = "Error";
+}
+
+<div class="container-fluid d-flex justify-content-center align-items-center" style="min-height:80vh; overflow:hidden;">
+	<div class="home-container">
+
+		<h1 class="text-danger">Ошибка</h1>
+		<p>Произошла ошибка во время выполнения запроса.</p>
+		@if (Model.ShowRequestId)
+		{
+			<p>
+				<strong>ID запроса:</strong> <code>@Model.RequestId</code>
+			</p>
+		}
+
+	</div>
+</div>
