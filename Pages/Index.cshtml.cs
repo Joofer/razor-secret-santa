@@ -44,6 +44,7 @@ namespace razor_secret_santa.Pages
                 try
                 {
                     _context.GiftModels.Add(giftModel);
+                    _context.SaveChanges();
                 }               
                 catch (Exception ex)
                 {
@@ -60,6 +61,7 @@ namespace razor_secret_santa.Pages
                 {
                     userModel.group = userModel.group!.ToUpper();
                     _context.UserModels.Add(userModel);
+                    _context.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -77,16 +79,6 @@ namespace razor_secret_santa.Pages
                     return RedirectToPage("/Error");
                 }
                 
-            }
-
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error: " + ex.Message);
-                return RedirectToPage("/Error");
             }
 
             return RedirectToPage("/Index", new { state = "success" });
