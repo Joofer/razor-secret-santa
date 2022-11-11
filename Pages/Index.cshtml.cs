@@ -69,7 +69,7 @@ namespace razor_secret_santa.Pages
 
                 try
                 {
-                    SendHello(userModel.email!, userModel.name, userModel.group);
+                    SendHello(userModel.id, userModel.email, userModel.name, userModel.group);
                 }
                 catch (Exception ex)
                 {
@@ -92,10 +92,10 @@ namespace razor_secret_santa.Pages
             return RedirectToPage("/Index", new { state = "success" });
         }
 
-        public void SendHello(string address, string name, string group)
+        public void SendHello(int id, string name, string group, string address)
         {
             string subject = "Тайный Санта - Подтверждение участия";
-            TextPart body = new TextPart(TextFormat.Html) { Text = String.Format("Привет, {0}! Ты успешно зарегистрирован в игре <b>Тайный Санта</b>.<br /><br />Данные:<br />Группа: {1}<br />Email: {2}<br /><br />Обратная связь: aw.works@ya.ru<br /><a href=\"\">Отписаться от рассылки</a>", name, group, address) };
+            TextPart body = new TextPart(TextFormat.Html) { Text = String.Format("Привет, {0}! Ты успешно зарегистрирован в игре <b>Тайный Санта</b>.<br /><br />Данные:<br />Группа: {1}<br />Email: {2}<br /><br />Обратная связь: aw.works@ya.ru<br /><a href=\"https://secret-santa-aw.azurewebsites.net/Unsubscribe?userID={3}\">Отписаться от рассылки</a>", name, group, address, id) };
             EmailController.Send(address, subject, body);
         }
     }
