@@ -20,7 +20,7 @@ namespace razor_secret_santa.Pages
         public IActionResult OnGet()
         {
             var userModel = _context.UserModels.SingleOrDefault(u => u.id == userID);
-            userModel!.email = null;
+            userModel!.email = "null@null.null";
             _context.SaveChanges();
             return Page();
         }
