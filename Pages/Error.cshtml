@@ -15,6 +15,12 @@
 				<strong>ID запроса:</strong> <code>@Model.RequestId</code>
 			</p>
 		}
+		@if (Model.Message != null)
+		{
+			<p>
+				<strong>Ошибка:</strong> <code>@Model.Message</code>
+			</p>
+		}
 
 	</div>
 </div>
