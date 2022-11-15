@@ -7,6 +7,7 @@ using razor_secret_santa.Data;
 using razor_secret_santa.Models;
 using razor_secret_santa.Controllers;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.IdentityModel.Tokens;
 
 namespace razor_secret_santa.Pages
 {
@@ -21,7 +22,14 @@ namespace razor_secret_santa.Pages
         public string state { get; set; }
         public string error { get; set; }
 
-        public int phase { get; set; } = 0; // DEV
+        public string email { get; set; }
+        public UserModel? foundUser { get; set; }
+        public UserDetails? foundDetails { get; set; }
+        public string? foundFriend { get; set; }
+        public string? foundGift { get; set; }
+
+        public int phase { get; set; } // DEV
+        public int userCount { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, ApplicationDbContext context)
         {
@@ -31,7 +39,37 @@ namespace razor_secret_santa.Pages
 
         public void OnGet()
         {
+            userCount = _context.UserDetails.Count();
 
+            if (email != null)
+            {
+                foundUser = _context.UserModels.Where(u => u.email == email).FirstOrDefault();
+                if (foundUser == null)
+                {
+                    state = "error";
+                    return;
+                }
+                foundDetails = _context.UserDetails.Where(d => d.userID == foundUser.id).FirstOrDefault();
+                if (foundDetails == null)
+                {
+                    state = "error";
+                    return;
+                }
+                foundFriend = _context.UserModels.Where(u => u.id == foundDetails.friendID).FirstOrDefault().name;
+                if (foundFriend == null)
+                {
+                    state = "error";
+                    return;
+                }
+                foundGift = _context.GiftModels.Where(g => g.id == foundDetails.giftID).FirstOrDefault().name;
+                if (foundGift == null)
+                {
+                    state = "error";
+                    return;
+                }
+
+                state = "success";
+            }
         }
 
         public IActionResult OnPost()
@@ -87,6 +125,10 @@ namespace razor_secret_santa.Pages
                     return RedirectToPage("/Error");
                 }*/
                 
+            }
+            else if (!string.IsNullOrEmpty(Request.Form["email"]))
+            {
+                return RedirectToPage("/Index", new { email = Request.Form["email"] });
             }
 
             return RedirectToPage("/Index", new { state = "success" });

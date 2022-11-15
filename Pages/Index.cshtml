@@ -61,7 +61,7 @@
 									}
 								</div>
 								<div class="w-75">
-									<p class="text-start">Регистрация участников, понадобится имя, группа и email для дальнейшего распределения и рассылки.</p>
+									<p class="text-start">Регистрация участников, понадобится имя, группа и email для дальнейшего распределения.</p>
 								</div>
 								<div class="w-25">
 									@if (Model.phase == 3)
@@ -237,12 +237,47 @@
 				</p>
 
 				<p class="subtitle">
-					Этап <span class="badge bg-info">3</span>: рассылка на email и обмен подарков. Продлится до: <span class="badge bg-info">@phase4.AddDays(-1).ToString("dd/MM/yyyy")</span>
+					Этап <span class="badge bg-info">3</span>: обмен подарков, вся информация доступна по email ниже. Продлится до: <span class="badge bg-info">@phase4.AddDays(-1).ToString("dd/MM/yyyy")</span>
 				</p>
 
 				<p class="subtitle">
-					Участников: <span class="badge bg-info">15</span>
+					Участников: <span class="badge bg-info">@Model.userCount</span>
 				</p>
+
+				<div class="d-flex justify-content-center align-items-center">
+
+					@if (Model.email == null || Model.state == "error")
+					{
+						<form method="post">
+							<div class="row home-container">
+								@if (Model.state == "error")
+								{
+								<div class="w-100 p-1">
+									<div class="alert alert-info p-1 mb-0" role="alert">
+										<p>Ошибка</p>
+										<p>Пользователь не найден.</p>
+									</div>
+								</div>
+								}
+								<div class="col-8 p-1">
+									<input name="email" type="email" class="w-100 form-control" placeholder="Email..." required />
+								</div>
+								<div class="col-4 p-1">
+									<button class="w-100 btn btn-info text-white" type="submit">Вперед!</button>
+								</div>
+							</div>
+						</form>
+					}
+					else if (Model.state == "success")
+					{
+						<p class="subtitle">
+							Привет, <span class="text-info">@Model.foundUser.name (@Model.foundUser.email)</span>!
+							<br />
+							Тебе выпал(а) <span class="text-warning">@Model.foundFriend</span>, подари ему(ей) <span class="text-warning">@Model.foundGift</span>.
+						</p>
+					}
+
+				</div>
 
 			</div>
 
