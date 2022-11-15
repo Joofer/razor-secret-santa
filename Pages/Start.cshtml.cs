@@ -8,7 +8,7 @@ using System.Linq;
 namespace razor_secret_santa.Pages
 {
     [Authorize]
-    public class SendEmailsModel : PageModel
+    public class StartModel : PageModel
     {
         private readonly ApplicationDbContext _context;
 
@@ -24,7 +24,7 @@ namespace razor_secret_santa.Pages
         [BindProperty(SupportsGet = true)]
         public string? state { get; set; }
 
-        public SendEmailsModel(ApplicationDbContext context)
+        public StartModel(ApplicationDbContext context)
         {
             _context = context;
         }

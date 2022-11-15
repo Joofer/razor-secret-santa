@@ -1,5 +1,5 @@
 ﻿@page
-@model razor_secret_santa.Pages.SendEmailsModel
+@model razor_secret_santa.Pages.StartModel
 @{
 	ViewData["Title"] = "Секретный Санта";
 }
@@ -9,14 +9,7 @@
 	@if (Model.state == "success")
 	{
 		<div class="alert alert-success alert-dismissible fade show" role="alert">
-			<strong>Успешно!</strong> Рассылка для группы @(Model.groupSent != null ? Model.groupSent : "#") успешно завершена.
-			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-		</div>
-	}
-	else if (Model.state == "error")
-	{
-		<div class="alert alert-danger alert-dismissible fade show" role="alert">
-			<strong>Ошибка!</strong> Произошла ошибка во время рассылки для группы @(Model.groupSent != null ? Model.groupSent : "#").
+			<strong>Успешно!</strong> Распределение для группы @(Model.groupSent != null ? Model.groupSent : "#") успешно завершено.
 			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 		</div>
 	}
@@ -36,7 +29,7 @@
 					<th scope="row">@users.Key</th>
 					<td>@users.Value.Count</td>
 					<td>
-						<a class="btn btn-info text-white" asp-page="/Control/StartEmails" asp-route-group="@users.Key">Рассылка</a>
+						<a class="btn btn-info text-white" asp-page="/Control/StartGroup" asp-route-group="@users.Key">Старт</a>
 					</td>
 				</tr>
 			}
