@@ -36,10 +36,14 @@ namespace razor_secret_santa.Pages
 
         public IActionResult OnPost()
         {
+            // Defining form used
+
             if (giftModel.name != null)
             {
                 if (_context.GiftModels.Where(g => g.name == giftModel.name).Count() > 0)
                     return RedirectToPage("/Index", new { state = "error", error = "exists" });
+
+                // Updating context
 
                 try
                 {
@@ -57,9 +61,11 @@ namespace razor_secret_santa.Pages
                 if (_context.UserModels.Where(u => u.email == userModel.email).Count() > 0)
                     return RedirectToPage("/Index", new { state = "error", error = "exists" });
 
+                // Updating context
+
                 try
                 {
-                    userModel.group = userModel.group!.ToUpper();
+                    userModel.group = userModel.group!.ToUpper().Trim();
                     _context.UserModels.Add(userModel);
                     _context.SaveChanges();
                 }
@@ -69,7 +75,9 @@ namespace razor_secret_santa.Pages
                     return RedirectToPage("/Error");
                 }
 
-                try
+                // Sending welcome email
+
+                /*try
                 {
                     SendHello(userModel.id, userModel.name, userModel.group, userModel.email);
                 }
@@ -77,7 +85,7 @@ namespace razor_secret_santa.Pages
                 {
                     Console.WriteLine("Error: " + ex.Message);
                     return RedirectToPage("/Error");
-                }
+                }*/
                 
             }
 
