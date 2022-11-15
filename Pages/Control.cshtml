@@ -21,6 +21,21 @@
 		}
 	</ul>
 
+	@if (Model.state == "success")
+	{
+		<div class="alert alert-success alert-dismissible fade show" role="alert">
+			<strong>Успешно!</strong> @Model.message
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	}
+	@if (Model.state == "error")
+	{
+		<div class="alert alert-danger alert-dismissible fade show" role="alert">
+			<strong>Ошибка!</strong> @Model.message
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	}
+
 	<div class="tab-content" id="pills-tabContent">
 		<div class="tab-pane fade show active" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab" tabindex="0">
 			<table class="table">
@@ -77,6 +92,7 @@
 		@if (Model.Details.Count > 0)
 		{
 			<div class="tab-pane fade" id="pills-details" role="tabpanel" aria-labelledby="pills-details-tab" tabindex="0">
+				<a class="btn btn-danger text-white" asp-page="/Control/ClearContext">Очистить</a>
 				<table class="table">
 					<thead class="thead-dark">
 						<tr>

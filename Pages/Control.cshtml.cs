@@ -10,7 +10,7 @@ using System.Runtime;
 namespace razor_secret_santa.Pages
 {
     [Authorize]
-    [BindProperties]
+    [BindProperties(SupportsGet = true)]
     public class ControlModel : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -23,6 +23,9 @@ namespace razor_secret_santa.Pages
         public List<UserModel> Users { get; set; }
         public List<UserDetails> Details { get; set; }
         public List<GiftModel> Gifts { get; set; }
+
+        public string state { get; set; }
+        public string message { get; set; }
 
         public void OnGet()
         {
