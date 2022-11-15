@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using razor_secret_santa.Data;
 
 namespace razor_secret_santa.Pages.Control
 {
+    [Authorize]
     public class ClearContextModel : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -25,7 +27,7 @@ namespace razor_secret_santa.Pages.Control
             catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
-                return RedirectToPage("/Control", new { state = "error", message = "Ошибка во время очистки распределения. Подробнее: " + ex.Message });
+                return RedirectToPage("/Control", new { state = "error", message = String.Format("Ошибка во время очистки распределения. Подробнее: {0}", ex.Message) });
             }
 
             return RedirectToPage("/Control", new { state = "success", message = "Очистка распределения успешно завершена." });
