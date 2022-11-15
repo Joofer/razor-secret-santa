@@ -13,6 +13,12 @@
 		<li class="nav-item" role="presentation">
 			<button class="nav-link" id="pills-gifts-tab" data-bs-toggle="pill" data-bs-target="#pills-gifts" type="button" role="tab" aria-controls="pills-gifts" aria-selected="false">Подарки</button>
 		</li>
+		@if (Model.Details.Count > 0)
+		{
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="pills-details-tab" data-bs-toggle="pill" data-bs-target="#pills-details" type="button" role="tab" aria-controls="pills-details" aria-selected="false">Распределение</button>
+			</li>
+		}
 	</ul>
 
 	<div class="tab-content" id="pills-tabContent">
@@ -68,6 +74,32 @@
 				</tbody>
 			</table>
 		</div>
+		@if (Model.Details.Count > 0)
+		{
+			<div class="tab-pane fade" id="pills-details" role="tabpanel" aria-labelledby="pills-details-tab" tabindex="0">
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">От</th>
+							<th scope="col">Кому</th>
+							<th scope="col">Подарок</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var details in Model.Details)
+						{
+							<tr>
+								<th scope="row">@details.userID</th>
+								<td>@details.user.name (@details.user.email)</td>
+								<td>@details.friend.name (@details.friend.email)</td>
+								<td>@details.gift.name</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		}
 	</div>
 
 </div>
