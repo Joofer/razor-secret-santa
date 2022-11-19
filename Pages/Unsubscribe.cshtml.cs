@@ -20,8 +20,20 @@ namespace razor_secret_santa.Pages
         public IActionResult OnGet()
         {
             var userModel = _context.UserModels.SingleOrDefault(u => u.id == userID);
-            userModel!.email = "null@null.null";
-            _context.SaveChanges();
+            if (userModel == null)
+                return RedirectToPage("/Error", new { Message = "Пользователь #" + userID + " не найден." });
+
+            try
+            {
+                userModel!.email = "null@null.null";
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return RedirectToPage("/Error", new { Message = "Ошибка во время выполнения запроса. Подробнее: " + ex.Message });
+            }
+
             return Page();
         }
     }
