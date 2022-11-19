@@ -4,36 +4,34 @@
 	ViewData["Title"] = "Секретный Санта";
 }
 
-<div class="text-center">
+<h1 class="text-center">Старт</h1>
 
-	@if (Model.state == "success")
-	{
-		<div class="alert alert-success alert-dismissible fade show" role="alert">
-			<strong>Успешно!</strong> Распределение для группы @(Model.groupSent != null ? Model.groupSent : "#") успешно завершено.
-			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-		</div>
-	}
+@if (Model.state == "success")
+{
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		<strong>Успешно!</strong> Распределение для группы @(Model.groupSent != null ? Model.groupSent : "#") успешно завершено.
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+}
 
-	<table class="table">
-		<thead class="thead-dark">
+<table class="table">
+	<thead>
+		<tr class="table-dark">
+			<th scope="col">Группа</th>
+			<th scope="col">Количество участников</th>
+			<th scope="col"></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var users in Model.users)
+		{
 			<tr>
-				<th scope="col">Группа</th>
-				<th scope="col">Количество участников</th>
-				<th scope="col"></th>
+				<th scope="row">@users.Key</th>
+				<td>@users.Value.Count</td>
+				<td>
+					<a class="btn btn-info text-white" asp-page="/Control/StartGroup" asp-route-group="@users.Key">Старт</a>
+				</td>
 			</tr>
-		</thead>
-		<tbody>
-			@foreach (var users in Model.users)
-			{
-				<tr>
-					<th scope="row">@users.Key</th>
-					<td>@users.Value.Count</td>
-					<td>
-						<a class="btn btn-info text-white" asp-page="/Control/StartGroup" asp-route-group="@users.Key">Старт</a>
-					</td>
-				</tr>
-			}
-		</tbody>
-	</table>
-
-</div>
+		}
+	</tbody>
+</table>
