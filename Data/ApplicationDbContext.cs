@@ -10,6 +10,7 @@ namespace razor_secret_santa.Data
         public DbSet<UserModel> UserModels { get; set; }
         public DbSet<GiftModel> GiftModels { get; set; }
         public DbSet<UserDetails> UserDetails { get; set; }
+        public DbSet<SettingsModel> SettingModels { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

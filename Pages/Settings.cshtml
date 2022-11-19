@@ -1,0 +1,60 @@
+﻿@page
+@model razor_secret_santa.Pages.SettingsModel
+@{
+}
+
+<h1 class="text-center">Настройки</h1>
+
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+	<li class="nav-item" role="presentation">
+		<button class="nav-link active" id="pills-general-tab" data-bs-toggle="pill" data-bs-target="#pills-general" type="button" role="tab" aria-controls="pills-general" aria-selected="true">Общие</button>
+	</li>
+	<li class="nav-item" role="presentation">
+		<button class="nav-link" id="pills-roles-tab" data-bs-toggle="pill" data-bs-target="#pills-roles" type="button" role="tab" aria-controls="pills-roles" aria-selected="false">Роли</button>
+	</li>
+</ul>
+
+@if (Model.state == "success")
+{
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		<strong>Успешно!</strong> @Model.message
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+}
+@if (Model.state == "error")
+{
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+		<strong>Ошибка!</strong> @Model.message
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+}
+
+<div class="tab-content" id="pills-tabContent">
+	<div class="tab-pane fade show active" id="pills-general" role="tabpanel" aria-labelledby="pills-general-tab" tabindex="0">
+		<a class="btn btn-success text-white m-2" asp-page="/Settings/AddSettings">Добавить</a>
+		<table class="table">
+			<thead>
+				<tr class="table-dark">
+					<th scope="col">Параметр</th>
+					<th scope="col">Значение</th>
+					<th scope="col">#</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var settingsModel in Model.settingsModels)
+				{
+					<tr>
+						<th>@settingsModel.name</th>
+						<td>@settingsModel.value</td>
+						<td>
+							<a class="btn btn-info text-white" asp-page="/Settings/EditSettings" asp-route-id="@settingsModel.id">Ред.</a>
+							<a class="btn btn-danger text-white" asp-page="/Settings/DeleteSettings" asp-route-id="@settingsModel.id">Удалить</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+	<div class="tab-pane fade show active" id="pills-roles" role="tabpanel" aria-labelledby="pills-roles-tab" tabindex="0">
+	</div>
+</div>
