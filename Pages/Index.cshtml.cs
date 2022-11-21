@@ -18,7 +18,34 @@ namespace razor_secret_santa.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly ApplicationDbContext _context;
 
-        public bool serviceEnabled { get; set; }
+        public bool serviceEnabled { 
+            get 
+            {
+                try
+                {
+                    var serviceEnabledStr = _context.SettingModels.Where(s => s.name == "serviceEnabled").FirstOrDefault();
+                    return (serviceEnabledStr == null ? true : (serviceEnabledStr.value == "true" ? true : false));
+                }
+                catch
+                {
+                    return true;
+                }
+            }
+        }
+        public bool devModeEnabled { 
+            get
+            {
+                try
+                {
+                    var devModeEnabledStr = _context.SettingModels.Where(s => s.name == "devModeEnabled").FirstOrDefault();
+                    return (devModeEnabledStr == null ? false : (devModeEnabledStr.value == "true" ? true : false));
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
 
         public GiftModel giftModel { get; set; }
         public UserModel userModel { get; set; }
@@ -42,33 +69,40 @@ namespace razor_secret_santa.Pages
 
         public void OnGet()
         {
-            var serviceEnabledStr = _context.SettingModels.Where(s => s.name == "serviceEnabled").FirstOrDefault().value;
-            serviceEnabled = (serviceEnabledStr == null ? true : (serviceEnabledStr == "true" ? true : false));
-
             userCount = _context.UserDetails.Count();
 
             if (email != null)
             {
-                foundUser = _context.UserModels.Where(u => u.email == email).FirstOrDefault();
-                if (foundUser == null)
+                try
                 {
-                    state = "error";
-                    return;
+                    foundUser = _context.UserModels.Where(u => u.email == email).FirstOrDefault();
+                    if (foundUser == null)
+                    {
+                        state = "error";
+                        return;
+                    }
+                    foundDetails = _context.UserDetails.Where(d => d.userID == foundUser.id).FirstOrDefault();
+                    if (foundDetails == null)
+                    {
+                        state = "error";
+                        return;
+                    }
+                    var foundFriendTmp = _context.UserModels.Where(u => u.id == foundDetails.friendID).FirstOrDefault();
+                    if (foundFriendTmp == null)
+                    {
+                        state = "error";
+                        return;
+                    }
+                    foundFriend = foundFriendTmp.name;
+                    var foundGiftTmp = _context.GiftModels.Where(g => g.id == foundDetails.giftID).FirstOrDefault();
+                    if (foundGiftTmp == null)
+                    {
+                        state = "error";
+                        return;
+                    }
+                    foundGift = foundGiftTmp.name;
                 }
-                foundDetails = _context.UserDetails.Where(d => d.userID == foundUser.id).FirstOrDefault();
-                if (foundDetails == null)
-                {
-                    state = "error";
-                    return;
-                }
-                foundFriend = _context.UserModels.Where(u => u.id == foundDetails.friendID).FirstOrDefault().name;
-                if (foundFriend == null)
-                {
-                    state = "error";
-                    return;
-                }
-                foundGift = _context.GiftModels.Where(g => g.id == foundDetails.giftID).FirstOrDefault().name;
-                if (foundGift == null)
+                catch
                 {
                     state = "error";
                     return;
@@ -93,7 +127,7 @@ namespace razor_secret_santa.Pages
                 {
                     _context.GiftModels.Add(giftModel);
                     _context.SaveChanges();
-                }               
+                }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error: " + ex.Message);
@@ -101,7 +135,9 @@ namespace razor_secret_santa.Pages
                 }
 
                 // DEV
-                return RedirectToPage("/Index", new { phase = 1, state = "success" });
+
+                if (devModeEnabled)
+                    return RedirectToPage("/Index", new { phase = 1, state = "success" });
             }
             else if (userModel.name != null)
             {
@@ -135,12 +171,16 @@ namespace razor_secret_santa.Pages
                 }*/
 
                 // DEV
-                return RedirectToPage("/Index", new { phase = 2, state = "success" });
+                if (devModeEnabled)
+                    return RedirectToPage("/Index", new { phase = 2, state = "success" });
             }
             else if (!string.IsNullOrEmpty(Request.Form["email"]))
             {
-                // DEV phase
-                return RedirectToPage("/Index", new { phase = 3, email = Request.Form["email"] });
+                // DEV
+                if (devModeEnabled)
+                    return RedirectToPage("/Index", new { phase = 3, email = Request.Form["email"] });
+                else
+                    return RedirectToPage("/Index", new { email = Request.Form["email"] });
             }
 
             return RedirectToPage("/Index", new { state = "success" });
