@@ -8,6 +8,7 @@ using razor_secret_santa.Models;
 using razor_secret_santa.Controllers;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 
 namespace razor_secret_santa.Pages
 {
@@ -16,6 +17,8 @@ namespace razor_secret_santa.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly ApplicationDbContext _context;
+
+        public bool serviceEnabled { get; set; }
 
         public GiftModel giftModel { get; set; }
         public UserModel userModel { get; set; }
@@ -39,6 +42,9 @@ namespace razor_secret_santa.Pages
 
         public void OnGet()
         {
+            var serviceEnabledStr = _context.SettingModels.Where(s => s.name == "serviceEnabled").FirstOrDefault().value;
+            serviceEnabled = (serviceEnabledStr == null ? true : (serviceEnabledStr == "true" ? true : false));
+
             userCount = _context.UserDetails.Count();
 
             if (email != null)
