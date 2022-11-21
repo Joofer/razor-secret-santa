@@ -48,7 +48,7 @@ namespace razor_secret_santa.Pages.Control
                 return RedirectToPage("/Settings", new { state = "error", message = String.Format("Ошибка во время редактирования значения. Подробнее: {0}", ex.Message) });
             }
 
-            return RedirectToPage("/Settings", new { state = "success", message = "Изменения успешно сохранены." });
+            return RedirectToPage("/Settings", new { state = "success" });
         }
     }
 }

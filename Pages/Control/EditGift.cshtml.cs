@@ -49,7 +49,7 @@ namespace razor_secret_santa.Pages.Control
                 return RedirectToPage("/Control", new { state = "error", message = String.Format("Ошибка во время редактирования подарка. Подробнее: {0}", ex.Message) });
             }
 
-            return RedirectToPage("/Control", new { state = "success", message = "Изменения успешно сохранены!" });
+            return RedirectToPage("/Control", new { state = "success" });
         }
     }
 }

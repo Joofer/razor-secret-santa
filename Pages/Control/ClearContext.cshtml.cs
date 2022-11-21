@@ -30,7 +30,7 @@ namespace razor_secret_santa.Pages.Control
                 return RedirectToPage("/Control", new { state = "error", message = String.Format("Ошибка во время очистки распределения. Подробнее: {0}", ex.Message) });
             }
 
-            return RedirectToPage("/Control", new { state = "success", message = "Очистка распределения успешно завершена." });
+            return RedirectToPage("/Control", new { state = "success" });
         }
     }
 }
