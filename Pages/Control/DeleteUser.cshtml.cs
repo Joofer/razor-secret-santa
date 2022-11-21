@@ -21,18 +21,25 @@ namespace razor_secret_santa.Pages.Control
 
         public IActionResult OnGet()
         {
-            if (_context.UserModels.Count() > 0)
+            var user = _context.UserModels.Where(u => u.id == id).FirstOrDefault();
+
+            if (user == null) 
+                return RedirectToPage("/Control", new { state = "error", message = String.Format("Пользователь #{0} не найден.", id) });
+
+            try
             {
-                var user = _context.UserModels.Where(u => u.id == id).First();
-                if (user != null) _context.UserModels.Remove(user);
-                if (_context.UserDetails.Count() > 0)
-                {
-                    var details = _context.UserDetails.Where(d => d.userID == id).First();
-                    if (details != null) _context.UserDetails.Remove(details);
-                }
+                _context.UserModels.Remove(user);
+                var details = _context.UserDetails.Where(d => d.userID == id).First();
+                if (details != null) _context.UserDetails.Remove(details);
                 _context.SaveChanges();
             }
-            return RedirectToPage("/Control");
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return RedirectToPage("/Control", new { state = "error", message = String.Format("Ошибка во время удаления пользователя. Подробнее: {0}", ex.Message) });
+            }
+
+            return RedirectToPage("/Control", new { state = "success", message = "Изменения успешно сохранены!" });
         }
     }
 }

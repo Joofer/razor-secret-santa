@@ -21,7 +21,7 @@ namespace razor_secret_santa.Pages
         {
             var userModel = _context.UserModels.SingleOrDefault(u => u.id == userID);
             if (userModel == null)
-                return RedirectToPage("/Error", new { Message = "Пользователь #" + userID + " не найден." });
+                return RedirectToPage("/Error", new { message = "Пользователь #" + userID + " не найден." });
 
             try
             {
@@ -31,7 +31,7 @@ namespace razor_secret_santa.Pages
             catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
-                return RedirectToPage("/Error", new { Message = "Ошибка во время выполнения запроса. Подробнее: " + ex.Message });
+                return RedirectToPage("/Error", new { message = "Ошибка во время выполнения запроса. Подробнее: " + ex.Message });
             }
 
             return Page();

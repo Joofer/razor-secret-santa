@@ -31,7 +31,7 @@ namespace razor_secret_santa.Pages.Control
         public IActionResult OnGet()
         {
             var groups = _context.UserModels.Select(u => u.group).Distinct().ToList();
-            if (groups.Count < 1 || !groups.Contains(group)) return RedirectToPage("/Error", new { Message = String.Format("Ошибка во время распределения для группы {0}.", group) });
+            if (groups.Count < 1 || !groups.Contains(group)) return RedirectToPage("/Start", new { state = "error", message = String.Format("Ошибка во время распределения для группы {0}.", group) });
             var users = _context.UserModels.Where(u => u.group == group).ToList();
             var gifts = _context.GiftModels.ToList();
 
@@ -49,7 +49,7 @@ namespace razor_secret_santa.Pages.Control
             if (error != null)
             {
                 Console.WriteLine("Error: " + error);
-                return RedirectToPage("/Error", new { Message = String.Format("Ошибка во время распределения для группы {0}: ошибка проверки.\nПодробнее: {1}", group, error) });
+                return RedirectToPage("/Start", new { state = "error", message = String.Format("Ошибка во время распределения для группы {0}: ошибка проверки.\nПодробнее: {1}", group, error) });
             }
 
             // Shuffling lists
@@ -63,7 +63,7 @@ namespace razor_secret_santa.Pages.Control
             if (error != null)
             {
                 Console.WriteLine("Error: " + error);
-                return RedirectToPage("/Error", new { Message = String.Format("Ошибка во время распределения для группы {0}: ошибка добавления записей.\nПодробнее: {1}", group, error) });
+                return RedirectToPage("/Start", new { state = "error", message = String.Format("Ошибка во время распределения для группы {0}: ошибка добавления записей.\nПодробнее: {1}", group, error) });
             }
 
             return RedirectToPage("/Start", new { state = "success", groupSent = group });

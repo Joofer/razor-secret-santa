@@ -30,7 +30,11 @@ namespace razor_secret_santa.Pages.Control
 
         public IActionResult OnPost()
         {
-            var settings = _context.SettingModels.SingleOrDefault(s => s.id == id);
+            var settings = _context.SettingModels.Where(s => s.id == id).FirstOrDefault();
+
+            if (settings == null)
+                return RedirectToPage("/Settings", new { state = "error", message = "Не найдено значение #" + id + "." });
+
             settings!.name = settingsModel!.name;
             settings!.value = settingsModel!.value;
 

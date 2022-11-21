@@ -23,20 +23,36 @@ namespace razor_secret_santa.Pages.Control
 
         public IActionResult OnGet()
         {
-            user = _context.UserModels.Find(id);
+            user = _context.UserModels.Where(u => u.id == id).FirstOrDefault();
+
             if (user == null)
-                return RedirectToPage("/Control");
+                return RedirectToPage("/Control", new { state = "error", message = String.Format("Пользователь #{0} не найден.", id) });
+
             return Page();
         }
 
         public IActionResult OnPost()
         {
-            var userModel = _context.UserModels.SingleOrDefault(u => u.id == id);
+            var userModel = _context.UserModels.Where(u => u.id == id).FirstOrDefault();
+
+            if (userModel == null)
+                return RedirectToPage("/Control", new { state = "error", message = String.Format("Пользователь #{0} не найден.", id) });
+
             userModel!.name = user!.name;
             userModel!.group = user!.group;
             userModel!.email = user!.email;
-            _context.SaveChanges();
-            return RedirectToPage("/Control");
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return RedirectToPage("/Control", new { state = "error", message = String.Format("Ошибка во время редактирования пользователя. Подробнее: {0}", ex.Message) });
+            }
+
+            return RedirectToPage("/Control", new { state = "success", message = "Изменения успешно сохранены!" });
         }
     }
 }

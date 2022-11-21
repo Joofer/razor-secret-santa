@@ -23,6 +23,8 @@ namespace razor_secret_santa.Pages
         public string? groupSent { get; set; }
         [BindProperty(SupportsGet = true)]
         public string? state { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string? message { get; set; }
 
         public StartModel(ApplicationDbContext context)
         {

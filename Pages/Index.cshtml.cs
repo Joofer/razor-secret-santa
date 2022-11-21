@@ -91,7 +91,7 @@ namespace razor_secret_santa.Pages
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error: " + ex.Message);
-                    return RedirectToPage("/Error");
+                    return RedirectToPage("/Error", new { message = ex.Message });
                 }
             }
             else if (userModel.name != null)
@@ -110,7 +110,7 @@ namespace razor_secret_santa.Pages
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error: " + ex.Message);
-                    return RedirectToPage("/Error");
+                    return RedirectToPage("/Error", new { message = ex.Message });
                 }
 
                 // Sending welcome email

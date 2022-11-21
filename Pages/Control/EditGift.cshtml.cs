@@ -22,17 +22,34 @@ namespace razor_secret_santa.Pages.Control
 
         public IActionResult OnGet()
         {
-            gift = _context.GiftModels.Find(id);
+            gift = _context.GiftModels.Where(g => g.id == id).FirstOrDefault();
+
             if (gift == null)
-                return RedirectToPage("/Control");
+                return RedirectToPage("/Control", new { state = "error", message = String.Format("Подарок #{0} не найден.", id) });
+
             return Page();
         }
 
         public IActionResult OnPost()
         {
-            var giftModel = _context.GiftModels.SingleOrDefault(g => g.id == id)!.name = gift!.name;
-            _context.SaveChanges();
-            return RedirectToPage("/Control");
+            var giftModel = _context.GiftModels.Where(g => g.id == id).FirstOrDefault();
+
+            if (giftModel == null)
+                return RedirectToPage("/Control", new { state = "error", message = String.Format("Подарок #{0} не найден.", id) });
+
+            giftModel.name = gift!.name;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return RedirectToPage("/Control", new { state = "error", message = String.Format("Ошибка во время редактирования подарка. Подробнее: {0}", ex.Message) });
+            }
+
+            return RedirectToPage("/Control", new { state = "success", message = "Изменения успешно сохранены!" });
         }
     }
 }

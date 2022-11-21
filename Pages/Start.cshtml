@@ -13,6 +13,13 @@
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	</div>
 }
+@if (Model.state == "error")
+{
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+		<strong>Ошибка!</strong> @Model.message
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+}
 
 <table class="table">
 	<thead>

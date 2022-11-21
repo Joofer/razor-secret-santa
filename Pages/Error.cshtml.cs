@@ -15,7 +15,7 @@ namespace razor_secret_santa.Pages
         private readonly ILogger<ErrorModel> _logger;
 
         [BindProperty(SupportsGet = true)]
-        public string? Message { get; set; }
+        public string? message { get; set; }
 
         public ErrorModel(ILogger<ErrorModel> logger)
         {
