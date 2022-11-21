@@ -99,6 +99,9 @@ namespace razor_secret_santa.Pages
                     Console.WriteLine("Error: " + ex.Message);
                     return RedirectToPage("/Error", new { message = ex.Message });
                 }
+
+                // DEV
+                return RedirectToPage("/Index", new { phase = 1, state = "success" });
             }
             else if (userModel.name != null)
             {
@@ -130,11 +133,14 @@ namespace razor_secret_santa.Pages
                     Console.WriteLine("Error: " + ex.Message);
                     return RedirectToPage("/Error");
                 }*/
-                
+
+                // DEV
+                return RedirectToPage("/Index", new { phase = 2, state = "success" });
             }
             else if (!string.IsNullOrEmpty(Request.Form["email"]))
             {
-                return RedirectToPage("/Index", new { email = Request.Form["email"] });
+                // DEV phase
+                return RedirectToPage("/Index", new { phase = 3, email = Request.Form["email"] });
             }
 
             return RedirectToPage("/Index", new { state = "success" });
