@@ -38,7 +38,7 @@
 
 			@if (Model.phase >= 0)
 			{
-				<!-- Modal -->
+				<!-- Rules Modal -->
 
 				<div class="modal fade" id="rulesModal" tabindex="-1" role="dialog" aria-labelledby="rulesModalTitle" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-centered" role="document">
@@ -109,12 +109,78 @@
 					}
 				</script>
 
-				<!-- /Modal -->
+				<!-- /Rules Modal -->
 			}
 
 			@if (Model.phase == 1)
 			{
 				<!-- Этап 1 -->
+
+				<!-- Register Modal -->
+
+				<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="registerModalTitle">Регистрация</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<p>Регистрация в игре</p>
+								<div class="d-flex justify-content-center align-items-center">
+									<form method="post">
+										<div class="row home-container">
+											@if (Model.state == "success")
+											{
+												<div class="w-100 p-1">
+													<div class="alert alert-info p-1 mb-0" role="alert">
+														<p>Успешно</p>
+													</div>
+												</div>
+											}
+											else if (Model.state == "error")
+											{
+												<div class="w-100 p-1">
+													<div class="alert alert-info p-1 mb-0" role="alert">
+														<p>Ошибка</p>
+														@if (Model.error == "exists")
+														{
+															<p>Такой Email уже зарегистрирован.</p>
+														}
+													</div>
+												</div>
+											}
+											<div class="text-info" asp-validation-summary="ModelOnly"></div>
+											<div class="col-6 p-1">
+												<input type="text" class="w-100 form-control" asp-for="userModel.name" placeholder="Имя..." required />
+											</div>
+											<div class="col-6 p-1">
+												<input type="text" class="w-100 form-control" asp-for="userModel.group" placeholder="Группа..." required />
+											</div>
+											<div class="col-8 p-1">
+												<input type="email" class="w-100 form-control" asp-for="userModel.email" placeholder="Email..." required />
+											</div>
+											<div class="col-4 p-1">
+												<button class="w-100 btn btn-info text-white" type="submit">Вперед!</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<script>
+					function openRegister() {
+						$('#registerModal').modal('show');
+					}
+					function closeRegister() {
+						$('#registerModal').modal('hide');
+					}
+				</script>
+
+				<!-- /Register Modal -->
 
 				<div class="d-flex justify-content-center align-items-center">
 					<h1 class="title text-capitalize my-4 px-2 py-1">
@@ -128,6 +194,10 @@
 
 				<p class="subtitle">
 					Этап <span class="badge bg-info">1</span>: сбор пожеланий для подарков. Продлится до: <span class="badge bg-info">@(new DateTime(phase2.Ticks).AddDays(-1).ToString("dd/MM/yyyy"))</span>
+				</p>
+
+				<p class="subtitle">
+					<a class="col-3 link-info" onclick="openRegister();" href="#">Регистрация</a>
 				</p>
 
 				<div class="d-flex justify-content-center align-items-center">
