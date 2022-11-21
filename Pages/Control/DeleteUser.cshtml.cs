@@ -29,7 +29,7 @@ namespace razor_secret_santa.Pages.Control
             try
             {
                 _context.UserModels.Remove(user);
-                var details = _context.UserDetails.Where(d => d.userID == id).First();
+                var details = _context.UserDetails.Where(d => d.userID == id).FirstOrDefault();
                 if (details != null) _context.UserDetails.Remove(details);
                 _context.SaveChanges();
             }
