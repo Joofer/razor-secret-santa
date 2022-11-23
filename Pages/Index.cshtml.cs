@@ -119,7 +119,7 @@ namespace razor_secret_santa.Pages
             if (giftModel.name != null)
             {
                 if (_context.GiftModels.Where(g => g.name == giftModel.name).Count() > 0)
-                    return RedirectToPage("/Index", new { state = "error", error = "exists" });
+                    return RedirectToPage("/Index", new { state = "gift-error", error = "exists" });
 
                 // Updating context
 
@@ -137,12 +137,12 @@ namespace razor_secret_santa.Pages
                 // DEV
 
                 if (devModeEnabled)
-                    return RedirectToPage("/Index", new { phase = 1, state = "success" });
+                    return RedirectToPage("/Index", new { phase = 1, state = "gift-success" });
             }
             else if (userModel.name != null)
             {
                 if (_context.UserModels.Where(u => u.email == userModel.email).Count() > 0)
-                    return RedirectToPage("/Index", new { state = "error", error = "exists" });
+                    return RedirectToPage("/Index", new { state = "registration-error", error = "exists" });
 
                 // Updating context
 
@@ -172,13 +172,13 @@ namespace razor_secret_santa.Pages
 
                 // DEV
                 if (devModeEnabled)
-                    return RedirectToPage("/Index", new { phase = 2, state = "success" });
+                    return RedirectToPage("/Index", new { phase = 1, state = "registration-success" });
             }
             else if (!string.IsNullOrEmpty(Request.Form["email"]))
             {
                 // DEV
                 if (devModeEnabled)
-                    return RedirectToPage("/Index", new { phase = 3, email = Request.Form["email"] });
+                    return RedirectToPage("/Index", new { phase = 2, email = Request.Form["email"] });
                 else
                     return RedirectToPage("/Index", new { email = Request.Form["email"] });
             }
