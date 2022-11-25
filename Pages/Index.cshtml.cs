@@ -148,7 +148,8 @@ namespace razor_secret_santa.Pages
 
                 try
                 {
-                    userModel.group = userModel.group!.ToUpper().Trim();
+                    userModel.group = "default";
+                    // userModel.group = userModel.group!.ToUpper().Trim();
                     _context.UserModels.Add(userModel);
                     _context.SaveChanges();
                 }
