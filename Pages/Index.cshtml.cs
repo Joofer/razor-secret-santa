@@ -138,6 +138,8 @@ namespace razor_secret_santa.Pages
 
                 if (devModeEnabled)
                     return RedirectToPage("/Index", new { phase = 1, state = "gift-success" });
+                else
+                    return RedirectToPage("/Index", new { state = "gift-success" });
             }
             else if (userModel.name != null)
             {
@@ -174,6 +176,8 @@ namespace razor_secret_santa.Pages
                 // DEV
                 if (devModeEnabled)
                     return RedirectToPage("/Index", new { phase = 1, state = "registration-success" });
+                else
+                    return RedirectToPage("/Index", new { state = "registration-success" });
             }
             else if (!string.IsNullOrEmpty(Request.Form["email"]))
             {
@@ -184,7 +188,7 @@ namespace razor_secret_santa.Pages
                     return RedirectToPage("/Index", new { email = Request.Form["email"] });
             }
 
-            return RedirectToPage("/Index", new { state = "success" });
+            return RedirectToPage("/Index");
         }
 
         public void SendHello(int id, string name, string group, string address)
