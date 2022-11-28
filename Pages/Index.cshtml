@@ -3,14 +3,10 @@
 @{
 	ViewData["Title"] = "Тайный Санта";
 
-	DateTime phase1 = new DateTime(2022, 11, 25),
-		phase2 = new DateTime(2022, 12, 2),
-		phase3 = new DateTime(2022, 12, 8);
-
 	if (!Model.devModeEnabled)
 	{
-		if (DateTime.Today >= phase1 && DateTime.Today < phase2) Model.phase = 1;
-		else if (DateTime.Today >= phase2 && DateTime.Today < phase3) Model.phase = 2;
+		if (DateTime.Today >= Model.phase1 && DateTime.Today < Model.phase2) Model.phase = 1;
+		else if (DateTime.Today >= Model.phase2 && DateTime.Today < Model.phase3) Model.phase = 2;
 		else Model.phase = 0;
 	}
 }
@@ -174,7 +170,7 @@
 				</p>
 
 				<p class="subtitle">
-					Этап <span class="badge bg-info">1</span>: регистрация и сбор идей для подарков. Продлится до: <span class="badge bg-info">@(new DateTime(phase2.Ticks).AddDays(-1).ToString("dd/MM/yyyy"))</span>
+					Этап <span class="badge bg-info">1</span>: регистрация и сбор идей для подарков. Продлится до: <span class="badge bg-info">@Model.phase2.AddDays(-1).ToString("dd/MM/yyyy")</span>
 				</p>
 
 				<p class="subtitle">
@@ -264,7 +260,7 @@
 				</p>
 
 				<p class="subtitle">
-					Этап <span class="badge bg-info">3</span>: обмен подарков, вся информация доступна по email ниже. Продлится до: <span class="badge bg-info">@phase3.AddDays(-1).ToString("dd/MM/yyyy")</span>
+					Этап <span class="badge bg-info">3</span>: обмен подарков, вся информация доступна по email ниже. Продлится до: <span class="badge bg-info">@Model.phase3.AddDays(-1).ToString("dd/MM/yyyy")</span>
 				</p>
 
 				<p class="subtitle">
@@ -324,7 +320,7 @@
 				</p>
 
 				<p class="subtitle">
-					Начало ивента: <span class="badge bg-info">@phase1.ToString("dd/MM/yyyy")</span>
+					Начало ивента: <span class="badge bg-info">@Model.phase1.ToString("dd/MM/yyyy")</span>
 				</p>
 
 				<!-- /Этап 0 -->

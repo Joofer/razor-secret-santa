@@ -18,8 +18,9 @@ namespace razor_secret_santa.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly ApplicationDbContext _context;
 
-        public bool serviceEnabled { 
-            get 
+        public bool serviceEnabled
+        {
+            get
             {
                 try
                 {
@@ -32,7 +33,8 @@ namespace razor_secret_santa.Pages
                 }
             }
         }
-        public bool devModeEnabled { 
+        public bool devModeEnabled
+        {
             get
             {
                 try
@@ -43,6 +45,54 @@ namespace razor_secret_santa.Pages
                 catch
                 {
                     return false;
+                }
+            }
+        }
+        public DateTime phase1
+        {
+            get
+            {
+                try
+                {
+                    var phase1Str = _context.SettingModels.Where(s => s.name == "phase_1").FirstOrDefault();
+                    if (phase1Str != null) return new DateTime(int.Parse(phase1Str.value.Split("/")[0]), int.Parse(phase1Str.value.Split("/")[1]), int.Parse(phase1Str.value.Split("/")[2]));
+                    else return DateTime.MinValue;
+                }
+                catch
+                {
+                    return DateTime.MinValue;
+                }
+            }
+        }
+        public DateTime phase2
+        {
+            get
+            {
+                try
+                {
+                    var phase2Str = _context.SettingModels.Where(s => s.name == "phase_2").FirstOrDefault();
+                    if (phase2Str != null) return new DateTime(int.Parse(phase2Str.value.Split("/")[0]), int.Parse(phase2Str.value.Split("/")[1]), int.Parse(phase2Str.value.Split("/")[2]));
+                    else return DateTime.MinValue;
+                }
+                catch
+                {
+                    return DateTime.MinValue;
+                }
+            }
+        }
+        public DateTime phase3
+        {
+            get
+            {
+                try
+                {
+                    var phase3Str = _context.SettingModels.Where(s => s.name == "phase_3").FirstOrDefault();
+                    if (phase3Str != null) return new DateTime(int.Parse(phase3Str.value.Split("/")[0]), int.Parse(phase3Str.value.Split("/")[1]), int.Parse(phase3Str.value.Split("/")[2]));
+                    else return DateTime.MinValue;
+                }
+                catch
+                {
+                    return DateTime.MinValue;
                 }
             }
         }

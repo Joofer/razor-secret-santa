@@ -25,7 +25,8 @@ namespace razor_secret_santa.Pages
 
         public IActionResult OnGet()
         {
-            settingsModels = _context.SettingModels.ToList();
+            var settings = _context.SettingModels;
+            if (settings.Any()) settingsModels = settings.OrderBy(s => s.name).ToList();
             return Page();
         }
     }
