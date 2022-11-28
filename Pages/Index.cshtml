@@ -15,14 +15,16 @@
 
 	<div class="row text-center d-flex align-items-center">
 
-		@if (!Model.serviceEnabled)
-		{
-			<div class="d-flex justify-content-center align-items-center">
+		<div class="d-flex justify-content-center align-items-center">
+			<a class="no-link" asp-page="/Index">
 				<h1 class="title text-capitalize my-4 px-2 py-1">
 					Привет! Это - Тайный Санта
 				</h1>
-			</div>
+			</a>
+		</div>
 
+		@if (!Model.serviceEnabled)
+		{
 			<p class="text-danger subtitle">
 				Сервис недоступен.
 			</p>
@@ -159,12 +161,6 @@
 
 				<!-- /Register Modal -->
 
-				<div class="d-flex justify-content-center align-items-center">
-					<h1 class="title text-capitalize my-4 px-2 py-1">
-						Привет! Это - Тайный Санта
-					</h1>
-				</div>
-
 				<p class="subtitle">
 					Спасибо за участие в нашем крутом новогоднем ивенте! Прочитай правила <a class="link-info no-link" onclick="openRules();" href="#">здесь</a>.
 				</p>
@@ -249,12 +245,6 @@
 			{
 				<!-- Этап 2 -->
 
-				<div class="d-flex justify-content-center align-items-center">
-					<h1 class="title text-capitalize my-4 px-2 py-1">
-						Привет! Это - Тайный Санта
-					</h1>
-				</div>
-
 				<p class="subtitle">
 					Спасибо за участие в нашем крутом новогоднем ивенте! Прочитай правила <a class="link-info no-link" onclick="openRules();" href="#">здесь</a>.
 				</p>
@@ -309,12 +299,6 @@
 			{
 				<!-- Этап 0 -->
 
-				<div class="d-flex justify-content-center align-items-center">
-					<h1 class="title text-capitalize my-4 px-2 py-1">
-						Привет! Это - Тайный Санта
-					</h1>
-				</div>
-
 				<p class="subtitle">
 					Скоро начнется крутой ивент, следи за обновлениями! Пока можешь прочитать правила <a class="link-info no-link" onclick="openRules();" href="#">здесь</a>.
 				</p>
@@ -327,6 +311,7 @@
 			}
 
 			<!-- DEV -->
+
 			@if (Model.devModeEnabled)
 			{
 				<div class="my-4 d-flex justify-content-center align-items-center">
