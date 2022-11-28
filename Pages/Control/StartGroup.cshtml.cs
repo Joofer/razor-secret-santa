@@ -69,7 +69,7 @@ namespace razor_secret_santa.Pages.Control
             return RedirectToPage("/Start", new { state = "success", groupSent = group });
         }
 
-        public void UpdateContext(List<UserModel> users, List<GiftModel> gifts, List<int> userIDs, List<int> friendIDs, List<int> giftIDs, out string? error)
+        public void UpdateContext(List<UserModel> users, List<GiftModel> gifts, List<string> userIDs, List<string> friendIDs, List<string> giftIDs, out string? error)
         {
             List<UserDetails> _details = new List<UserDetails>();
 
@@ -121,7 +121,7 @@ namespace razor_secret_santa.Pages.Control
             error = null;
         }
 
-        public void ClearContext(List<int> userIDs, out string? error)
+        public void ClearContext(List<string> userIDs, out string? error)
         {
             for (int i = 0; i < userIDs.Count; i++)
             {
@@ -177,7 +177,7 @@ namespace razor_secret_santa.Pages.Control
             error = null;
         }
 
-        public static void ShuffleVerified(ref List<int> arr)
+        public static void ShuffleVerified(ref List<string> arr)
         {
             var old = arr.ToList();
 
@@ -205,7 +205,7 @@ namespace razor_secret_santa.Pages.Control
             }
         }
 
-        public static void Shuffle(ref List<int> arr)
+        public static void Shuffle(ref List<string> arr)
         {
             arr = arr.OrderBy(a => rng.Next()).ToList();
         }

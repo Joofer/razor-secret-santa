@@ -226,11 +226,9 @@ namespace razorsecretsanta.Data.Migrations
 
             modelBuilder.Entity("razor_secret_santa.Models.GiftModel", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<string>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("name")
                         .IsRequired()
@@ -243,11 +241,9 @@ namespace razorsecretsanta.Data.Migrations
 
             modelBuilder.Entity("razor_secret_santa.Models.SettingsModel", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<string>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("name")
                         .IsRequired()
@@ -264,14 +260,16 @@ namespace razorsecretsanta.Data.Migrations
 
             modelBuilder.Entity("razor_secret_santa.Models.UserDetails", b =>
                 {
-                    b.Property<int>("userID")
-                        .HasColumnType("int");
+                    b.Property<string>("userID")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("friendID")
-                        .HasColumnType("int");
+                    b.Property<string>("friendID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("giftID")
-                        .HasColumnType("int");
+                    b.Property<string>("giftID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("userID");
 
@@ -284,11 +282,9 @@ namespace razorsecretsanta.Data.Migrations
 
             modelBuilder.Entity("razor_secret_santa.Models.UserModel", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<string>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("email")
                         .IsRequired()

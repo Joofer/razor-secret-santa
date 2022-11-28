@@ -9,16 +9,17 @@ namespace razor_secret_santa.Models
 {
     public class UserModel
 	{
-		public int id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string id { get; set; }
 		[Required]
 		[Display(Name = "User name")]
-		public string? name { get; set; }
+		public string name { get; set; }
 		[Required]
 		[Display(Name = "Group name")]
-        public string? group { get; set; }
+        public string group { get; set; }
 		[Required]
 		[DataType(DataType.EmailAddress)]
 		[Display(Name = "Email")]
-        public string? email { get; set; }
+        public string email { get; set; }
 	}
 }

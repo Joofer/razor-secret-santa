@@ -1,13 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace razor_secret_santa.Models
 {
 	public class GiftModel
 	{
-		public int id { get; set; }
-		[Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string id { get; set; }
+        [Required]
 		[Display(Name = "Gift name")]
-		public string? name { get; set; }
+		public string name { get; set; }
 	}
 }

@@ -7,13 +7,13 @@ namespace razor_secret_santa.Models
     public class UserDetails
     {
         [Key]
-        public int userID { get; set; }
+        public string userID { get; set; }
         [ForeignKey("userID")]
         public UserModel user { get; set; }
-        public int friendID { get; set; }
+        public string friendID { get; set; }
         [ForeignKey("friendID")]
         public UserModel friend { get; set; }
-        public int giftID { get; set; }
+        public string giftID { get; set; }
         [ForeignKey("giftID")]
         public GiftModel gift { get; set; }
     }

@@ -12,7 +12,7 @@ namespace razor_secret_santa.Pages.Control
         private readonly ApplicationDbContext _context;
 
         public Models.SettingsModel? _settingsModel { get; set; }
-        public int? id { get; set; }
+        public string? id { get; set; }
 
         public DeleteSettingsModel(ApplicationDbContext context)
         {

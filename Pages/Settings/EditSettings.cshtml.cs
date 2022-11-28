@@ -13,7 +13,7 @@ namespace razor_secret_santa.Pages.Control
         private readonly ApplicationDbContext _context;
 
         public Models.SettingsModel? settingsModel { get; set; }
-        public int? id { get; set; }
+        public string? id { get; set; }
 
         public EditSettingsModel(ApplicationDbContext context)
         {

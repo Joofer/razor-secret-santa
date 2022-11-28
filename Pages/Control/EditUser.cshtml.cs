@@ -14,7 +14,7 @@ namespace razor_secret_santa.Pages.Control
         private readonly ApplicationDbContext _context;
 
         public UserModel? user { get; set; }
-        public int id { get; set; }
+        public string id { get; set; }
 
         public EditUserModel(ApplicationDbContext context)
         {

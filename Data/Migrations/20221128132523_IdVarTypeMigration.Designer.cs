@@ -12,8 +12,8 @@ using razor_secret_santa.Data;
 namespace razorsecretsanta.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221109104034_SecretSantaData")]
-    partial class SecretSantaData
+    [Migration("20221128132523_IdVarTypeMigration")]
+    partial class IdVarTypeMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -229,11 +229,9 @@ namespace razorsecretsanta.Data.Migrations
 
             modelBuilder.Entity("razor_secret_santa.Models.GiftModel", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<string>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("name")
                         .IsRequired()
@@ -244,16 +242,37 @@ namespace razorsecretsanta.Data.Migrations
                     b.ToTable("GiftModels");
                 });
 
+            modelBuilder.Entity("razor_secret_santa.Models.SettingsModel", b =>
+                {
+                    b.Property<string>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("SettingModels");
+                });
+
             modelBuilder.Entity("razor_secret_santa.Models.UserDetails", b =>
                 {
-                    b.Property<int>("userID")
-                        .HasColumnType("int");
+                    b.Property<string>("userID")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("friendID")
-                        .HasColumnType("int");
+                    b.Property<string>("friendID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("giftID")
-                        .HasColumnType("int");
+                    b.Property<string>("giftID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("userID");
 
@@ -266,11 +285,9 @@ namespace razorsecretsanta.Data.Migrations
 
             modelBuilder.Entity("razor_secret_santa.Models.UserModel", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<string>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("email")
                         .IsRequired()

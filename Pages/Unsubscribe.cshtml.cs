@@ -10,7 +10,7 @@ namespace razor_secret_santa.Pages
     {
         private readonly ApplicationDbContext _context;
 
-        public int userID { get; set; }
+        public string userID { get; set; }
 
         public UnsubscribeModel(ApplicationDbContext context)
         {

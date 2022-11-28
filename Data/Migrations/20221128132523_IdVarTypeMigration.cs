@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace razorsecretsanta.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class SecretSantaData : Migration
+    public partial class IdVarTypeMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,8 +15,7 @@ namespace razorsecretsanta.Data.Migrations
                 name: "GiftModels",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -24,11 +24,23 @@ namespace razorsecretsanta.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SettingModels",
+                columns: table => new
+                {
+                    id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    value = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SettingModels", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserModels",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     group = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     email = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -42,9 +54,9 @@ namespace razorsecretsanta.Data.Migrations
                 name: "UserDetails",
                 columns: table => new
                 {
-                    userID = table.Column<int>(type: "int", nullable: false),
-                    friendID = table.Column<int>(type: "int", nullable: false),
-                    giftID = table.Column<int>(type: "int", nullable: false)
+                    userID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    friendID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    giftID = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,6 +82,11 @@ namespace razorsecretsanta.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserDetails_userID",
+                table: "UserDetails",
+                column: "userID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserDetails_friendID",
                 table: "UserDetails",
                 column: "friendID");
@@ -84,6 +101,9 @@ namespace razorsecretsanta.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "SettingModels");
+
+            migrationBuilder.DropTable(
                 name: "UserDetails");
 
             migrationBuilder.DropTable(
@@ -91,36 +111,6 @@ namespace razorsecretsanta.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserModels");
-
-            migrationBuilder.CreateTable(
-                name: "gifts",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_gifts", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "users",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    friend = table.Column<int>(type: "int", nullable: true),
-                    giftForFriend = table.Column<int>(type: "int", nullable: true),
-                    group = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_users", x => x.id);
-                });
         }
     }
 }
