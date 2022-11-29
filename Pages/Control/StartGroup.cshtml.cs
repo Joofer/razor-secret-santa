@@ -66,7 +66,7 @@ namespace razor_secret_santa.Pages.Control
                 return RedirectToPage("/Start", new { state = "error", message = String.Format("Ошибка во время распределения для группы {0}: ошибка добавления записей.\nПодробнее: {1}", group, error) });
             }
 
-            return RedirectToPage("/Start", new { state = "success", groupSent = group });
+            return RedirectToPage("/Start", new { state = "success" });
         }
 
         public void UpdateContext(List<UserModel> users, List<GiftModel> gifts, List<string> userIDs, List<string> friendIDs, List<string> giftIDs, out string? error)

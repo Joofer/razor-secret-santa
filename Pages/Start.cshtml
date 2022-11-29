@@ -9,7 +9,7 @@
 @if (Model.state == "success")
 {
 	<div class="alert alert-success alert-dismissible fade show" role="alert">
-		<strong>Успешно!</strong> Распределение для группы @(Model.groupSent != null ? Model.groupSent : "#") успешно завершено.
+		<strong>Успешно!</strong> Изменения успешно сохранены.
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	</div>
 }
@@ -21,22 +21,29 @@
 	</div>
 }
 
+<a class="btn btn-danger text-white mb-2" asp-page="/Control/ClearContext">Очистить</a>
 <table class="table">
 	<thead>
 		<tr class="table-dark">
 			<th scope="col">Группа</th>
 			<th scope="col">Количество участников</th>
+			<th scope="col">Зарегистрировано</th>
 			<th scope="col"></th>
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var users in Model.users)
+		@foreach (var group in Model.groups)
 		{
 			<tr>
-				<th scope="row">@users.Key</th>
-				<td>@users.Value.Count</td>
+				<th scope="row">@group.name</th>
+				<td>@group.count</td>
+				<td>@group.participatingCount</td>
 				<td>
-					<a class="btn btn-info text-white" asp-page="/Control/StartGroup" asp-route-group="@users.Key">Старт</a>
+					<a class="btn btn-info text-white" asp-page="/Control/StartGroup" asp-route-group="@group.name">Старт</a>
+					@if (group.participatingCount > 0)
+					{
+						<a class="btn btn-danger text-white" asp-page="/Control/ClearContext" asp-route-group="@group.name">Очистить</a>
+					}
 				</td>
 			</tr>
 		}
